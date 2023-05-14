@@ -13,7 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using SchoolService.Models;
 namespace SchoolService.Windows
 {
     /// <summary>
@@ -25,7 +25,11 @@ namespace SchoolService.Windows
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Метод добавления услуги
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClickAddService(object sender, RoutedEventArgs e)
         {
             try
@@ -62,12 +66,19 @@ namespace SchoolService.Windows
                 MessageBox.Show("Не все поля заполнены правильными типами данных");
             }
         }
-
+        /// <summary>
+        /// Метод закрытия окна
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Close(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = true;
             this.Hide();
         }
+        /// <summary>
+        /// Метод обновления всех TextBox и Image
+        /// </summary>
         public void updateAllTextBoxesAndImage()
         {
             TextBoxCost.Text = "";
@@ -76,7 +87,11 @@ namespace SchoolService.Windows
             TextBoxName.Text = "";
             ImageChoosedPhoto.Source = null;
         }
-
+        /// <summary>
+        /// Метод выбора фотографии
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClickChoosePhoto(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();

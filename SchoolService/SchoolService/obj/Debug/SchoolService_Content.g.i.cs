@@ -10,8 +10,8 @@
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/entityframework.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/entityframework.sqlserver.dll")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("model1.context.tt")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("model1.tt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("models/model1.context.tt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("models/model1.tt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/ru/entityframework.resources.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/schoolservice.exe")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/schoolservice.pdb")]

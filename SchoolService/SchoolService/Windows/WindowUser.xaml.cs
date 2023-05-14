@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing.Design;
-
+using SchoolService.Models;
 namespace SchoolService
 {
     /// <summary>
@@ -35,7 +35,9 @@ namespace SchoolService
                 TextBlockNumberOfServices.Text = "Кол-во услуг: " +( ListViewService.Items.Count) + "/" + db.Service.ToList().Count;
             }
         }
-       
+       /// <summary>
+       /// Метод инициализации ListView
+       /// </summary>
         public void InitializeListViewService()
         {
             using (DB db = new DB())
@@ -46,6 +48,9 @@ namespace SchoolService
                 TextBlockNumberOfServices.Text = "Кол-во услуг: " + (ListViewService.Items.Count) + "/" + db.Service.ToList().Count;
             }
         }
+        /// <summary>
+        /// Метод инициалзиации путей для фотографий
+        /// </summary>
         public void InitializePathsInSortedList()
         {
             foreach(var item in sortedList)
@@ -56,7 +61,9 @@ namespace SchoolService
                 }
             }
         }
-
+        /// <summary>
+        /// Метод инициализации ComboBox для фильтра
+        /// </summary>
         public void InitializeComboBoxFilter()
         {
             ComboBoxFilter.Items.Add("Все диапазоны");
@@ -67,6 +74,9 @@ namespace SchoolService
             ComboBoxFilter.Items.Add("От 70% до 100%");
             ComboBoxFilter.SelectedIndex = 0;
         }
+        /// <summary>
+        /// Метод добавления всех фильтров
+        /// </summary>
         public void AddAllFilters()
         {
             using (DB db = new DB())
@@ -113,24 +123,38 @@ namespace SchoolService
                 TextBlockNumberOfServices.Text = "Кол-во услуг: " + (ListViewService.Items.Count) + "/" + db.Service.ToList().Count;
             }
         }
-
-
-
+        /// <summary>
+        /// Обработка события изменения SelectedItem для применения фильтра
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SelectionChange(object sender, SelectionChangedEventArgs e)
         {
             AddAllFilters();
         }
-
+        /// <summary>
+        /// Обработка события изменения TextChange для применения фильтра
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextChange(object sender, TextChangedEventArgs e)
         {
             AddAllFilters();
         }
-
+        /// <summary>
+        /// Метод возврата на предыдущее окно
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClickLeave(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
-
+        /// <summary>
+        /// Метод перехода на окно администратора
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextChangeGetAdmin(object sender, TextChangedEventArgs e)
         {
             if (TextBoxAdminCode.Text == "0000")

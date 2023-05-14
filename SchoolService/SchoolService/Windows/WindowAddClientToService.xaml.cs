@@ -13,7 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using SchoolService.Models;
 namespace SchoolService.Windows
 {
     /// <summary>
@@ -25,13 +25,21 @@ namespace SchoolService.Windows
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Метод закрытия окна
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Close(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = true;
             this.Hide();
         }
-
+        /// <summary>
+        /// Метод добавления записи клиента на услугу
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClickAddClientToService(object sender, RoutedEventArgs e)
         {
             if(DatePickerDate.SelectedDate==null || ComboBoxChooseClient.SelectedItem==null || TextBoxTime.Text=="") {
@@ -62,12 +70,19 @@ namespace SchoolService.Windows
                 MainWindow.mainWindow.Show();
             }
         }
+        /// <summary>
+        /// Метод обновления всех полей ввода
+        /// </summary>
         public void UpdateAllBoxes()
         {
             TextBoxTime.Text = "";
             DatePickerDate.SelectedDate = null;
         }
-
+        /// <summary>
+        /// Метод возврата на предыдущее окно
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClickBack(object sender, RoutedEventArgs e)
         {
             this.Hide();

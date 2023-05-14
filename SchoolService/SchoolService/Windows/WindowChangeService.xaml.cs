@@ -13,7 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using SchoolService.Models;
 namespace SchoolService.Windows
 {
     /// <summary>
@@ -25,11 +25,13 @@ namespace SchoolService.Windows
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Метод редактирования услуги
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClickChangeService(object sender, RoutedEventArgs e)
         {
-            // try
-            //  {
             using (DB db = new DB())
             {
                 if (TextBoxCost.Text == "" || TextBoxDiscount.Text == "" || TextBoxDuration.Text == "" || TextBoxName.Text == "" || ImageChoosedPhoto.Source == null)
@@ -37,33 +39,32 @@ namespace SchoolService.Windows
                     MessageBox.Show("Вы заполнили не все поля!");
                     return;
                 }
-                if(int.Parse(TextBoxDuration.Text) > 240)
-            {
-                MessageBox.Show("Длительность услуги не должна превышать четырёх часов!");
-                return;
-            }
-                string textBoxNameText = TextBoxName.Text;
-                    Service currentService = db.Service.Where(element=> element.Id == MainWindow.currentChoosedService.Id).FirstOrDefault();
-                    Service serviceRepeat = null;
-                    foreach(var item in db.Service)
+                if (int.Parse(TextBoxDuration.Text) > 240)
                 {
-                    if(item.Name == TextBoxName.Text && item.Id != currentService.Id)
+                    MessageBox.Show("Длительность услуги не должна превышать четырёх часов!");
+                    return;
+                }
+                string textBoxNameText = TextBoxName.Text;
+                Service currentService = db.Service.Where(element => element.Id == MainWindow.currentChoosedService.Id).FirstOrDefault();
+                Service serviceRepeat = null;
+                foreach (var item in db.Service)
+                {
+                    if (item.Name == TextBoxName.Text && item.Id != currentService.Id)
                     {
                         serviceRepeat = item;
                         break;
                     }
                 }
-                    if (serviceRepeat != null)
-                    {
-                        MessageBox.Show("Услуга с таким наименованием уже есть в базе данных!");
-                        return;
-                    }
+                if (serviceRepeat != null)
+                {
+                    MessageBox.Show("Услуга с таким наименованием уже есть в базе данных!");
+                    return;
+                }
                 currentService.Name = TextBoxName.Text;
-                currentService.Cost=int.Parse(TextBoxCost.Text);
-                currentService.Duration=int.Parse(TextBoxDuration.Text);
-                currentService.Discount=int.Parse(TextBoxDiscount.Text);
+                currentService.Cost = int.Parse(TextBoxCost.Text);
+                currentService.Duration = int.Parse(TextBoxDuration.Text);
+                currentService.Discount = int.Parse(TextBoxDiscount.Text);
                 currentService.Image = ImageChoosedPhoto.Source.ToString();
-             //   MessageBox.Show("Count before delete: " + serviceCurrent.AdditionalImage.Count);
                 for (int i = 0; i < db.AdditionalImage.ToList().Count; i++)
                 {
                     if (db.AdditionalImage.ToList()[i].ServiceId == currentService.Id)
@@ -71,46 +72,35 @@ namespace SchoolService.Windows
                         db.AdditionalImage.Remove(db.AdditionalImage.ToList()[i]);
                     }
                 }
-                //db.SaveChanges();
-                //  MessageBox.Show("AfterDelete: " + serviceCurrent.AdditionalImage.Count);
-                // MessageBox.Show("CurrentCount: " + ListViewPhotosCurrent.Items.Count);
                 foreach (Service item in ListViewPhotosCurrent.Items)
                 {
                     Random rnd = new Random();
                     AdditionalImage additionalImage = new AdditionalImage();
                     additionalImage.Id = rnd.Next(1, 5000);
                     additionalImage.Image = item.Image;
-                        additionalImage.ServiceId = currentService.Id;
-                        currentService.AdditionalImage.Add(additionalImage);
-                    MessageBox.Show("AdditionalImage image: " + additionalImage.Image);
-                    MessageBox.Show("AdditionalImage imageID: " + additionalImage.ServiceId);
+                    additionalImage.ServiceId = currentService.Id;
+                    currentService.AdditionalImage.Add(additionalImage);
                     db.AdditionalImage.Add(additionalImage);
                 }
-                /*Service item2 = ListViewPhotosCurrent.Items[0] as Service;
-                string imgPath = item2.Image;
-                AdditionalImage additionalImage = new AdditionalImage();
-                additionalImage.Id = 555;
-                additionalImage.Image = imgPath;
-                MessageBox.Show("Imgpath: " + additionalImage.Image);
-                additionalImage.Service = db.Service.Where(element=> element.Id == currentService.Id).FirstOrDefault();
-               db.AdditionalImage.Add(additionalImage);*/
                 db.SaveChanges();
                 this.Hide();
-                      MessageBox.Show("Вы успешно изменили услугу");
-                    MainWindow.mainWindow.InitializeListViewService();
-                }
-         //   }
-          //  catch
-          //  {
-          //      MessageBox.Show("Не все поля заполнены правильными типами данных");
-          //  }
+                MessageBox.Show("Вы успешно изменили услугу");
+                MainWindow.mainWindow.InitializeListViewService();
+            }
         }
-
+        /// <summary>
+        /// Метод закрытия окна
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Close(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = true;
             this.Hide();
         }
+        /// <summary>
+        /// Метод обнолвения всех TextBox и Image
+        /// </summary>
         public void updateAllTextBoxesAndImage()
         {
             TextBoxCost.Text = "";
@@ -119,7 +109,11 @@ namespace SchoolService.Windows
             TextBoxName.Text = "";
             ImageChoosedPhoto.Source = null;
         }
-
+        /// <summary>
+        /// Метод выбора фотографии
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClickChoosePhoto(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -127,8 +121,6 @@ namespace SchoolService.Windows
             {
                 string path = ofd.FileName;
                 string pathToAdd = System.IO.Path.Combine(Environment.CurrentDirectory, "Услуги школы");
-                //  pathToAdd = System.IO.Path.Combine(pathToAdd, "Услуги школы");
-                // pathToAdd = System.IO.Path.Combine(pathToAdd, System.IO.Path.GetFileName(path)) ;
                 try
                 {
                     File.Copy(path, pathToAdd);
@@ -141,7 +133,11 @@ namespace SchoolService.Windows
                 MessageBox.Show("Вы выбрали фото!");
             }
         }
-
+        /// <summary>
+        /// Метод добавления фотографии
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClickAddPhoto(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -149,24 +145,22 @@ namespace SchoolService.Windows
             {
                 string path = ofd.FileName;
                 Service service = new Service();
-                //   ImageChoosedPhoto.Source = new BitmapImage(new Uri(path));
                 service.Image = path;
                 ListViewPhotosCurrent.Items.Add(service);
                 MessageBox.Show("Вы добавили фото!");
             }
         }
-
+        /// <summary>
+        /// Методу удаления фотографии
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClickRemove(object sender, RoutedEventArgs e)
         {
-            //List<Service> services = new List<Service>();
-            //foreach (var item in ListViewPhotosCurrent.Items)
-            //{
-            //    services.Add(item as Service);
-            //}
             Service serviceToRemove = new Service();
-            foreach(Service service in ListViewPhotosCurrent.Items)
+            foreach (Service service in ListViewPhotosCurrent.Items)
             {
-                if(service.Id == ((sender as Button).DataContext as Service).Id)
+                if (service.Id == ((sender as Button).DataContext as Service).Id)
                 {
                     serviceToRemove = service;
                     break;
@@ -174,7 +168,6 @@ namespace SchoolService.Windows
             }
             ListViewPhotosCurrent.Items.Remove(serviceToRemove);
             MessageBox.Show("Вы удалили фото");
-           // ListViewPhotosCurrent.ItemsSource = services;
         }
     }
 }
