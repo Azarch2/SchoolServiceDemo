@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,7 +29,13 @@ namespace SchoolService
             InitializeComponent();
     
         }
-
+        public void RefreshListEvery30Seconds()
+        {
+            Thread.Sleep(30000);
+            InitializeDataGrid();
+            Thread td = new Thread(new ThreadStart(RefreshListEvery30Seconds));
+            td.Start();
+        }
         public void InitializeDataGrid()
         {
             using (DB db = new DB())
@@ -63,7 +70,8 @@ namespace SchoolService
                 }
                 ListViewUpcomingEntries.ItemsSource = list;
             }
-            
+            Thread td = new Thread(new ThreadStart(RefreshListEvery30Seconds));
+            td.Start();
         }
 
         private void ClickBack(object sender, RoutedEventArgs e)

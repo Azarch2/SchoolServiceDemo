@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Azarch\source\repos\SchoolService\SchoolService\obj\Debug\
+C:\Users\Azarch\Desktop\Git\SchoolServiceDemo\SchoolService\SchoolService\obj\Debug\
 SchoolService
 none
 false
 DEBUG;TRACE
-C:\Users\Azarch\source\repos\SchoolService\SchoolService\App.xaml
-51061655312
+C:\Users\Azarch\Desktop\Git\SchoolServiceDemo\SchoolService\SchoolService\App.xaml
+6547083222
 71707862429
-201685256376
-20-542061907
-MainWindow.xaml;Windows\WindowUpcomingEntries.xaml;Windows\WindowAddClientToService.xaml;Windows\WindowChangeService.xaml;Windows\WindowAddService.xaml;
+211801664430
+20185116345
+MainWindow.xaml;Windows\WindowUpcomingEntries.xaml;Windows\WindowAddClientToService.xaml;Windows\WindowChangeService.xaml;Windows\WindowAddService.xaml;Windows\WindowUser.xaml;
 
-True
+False
 
