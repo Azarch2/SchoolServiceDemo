@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SchoolService.Windows"
         mc:Ignorable="d"
-        Title="Окно записи клиента на услугу" Height="450" Width="650" Closing="Close" Icon="../Resources/school_logo.png" WindowStartupLocation="CenterScreen">
+        Title="Окно записи клиента на услугу" Height="450" Width="650" MinHeight="450" MinWidth="600" Closing="Close" Icon="../Resources/school_logo.png" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>

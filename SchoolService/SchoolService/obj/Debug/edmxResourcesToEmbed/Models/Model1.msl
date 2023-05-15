@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="Хранилище DBModelContainer" CdmEntityContainer="DB">
+  <EntityContainerMapping StorageEntityContainer="Хранилище MyDataBaseModelContainer" CdmEntityContainer="MyDataBaseEntities2">
     <EntitySetMapping Name="AdditionalImage">
-      <EntityTypeMapping TypeName="DBModel.AdditionalImage">
+      <EntityTypeMapping TypeName="MyDataBaseModel.AdditionalImage">
         <MappingFragment StoreEntitySet="AdditionalImage">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Image" ColumnName="Image" />
@@ -11,13 +11,13 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Client">
-      <EntityTypeMapping TypeName="DBModel.Client">
+      <EntityTypeMapping TypeName="MyDataBaseModel.Client">
         <MappingFragment StoreEntitySet="Client">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Surname" ColumnName="Surname" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
-          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="GenderId" ColumnName="GenderId" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
           <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
           <ScalarProperty Name="Email" ColumnName="Email" />
@@ -26,17 +26,25 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="ClientService">
-      <EntityTypeMapping TypeName="DBModel.ClientService">
+      <EntityTypeMapping TypeName="MyDataBaseModel.ClientService">
         <MappingFragment StoreEntitySet="ClientService">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
-          <ScalarProperty Name="ServiceTime" ColumnName="ServiceTime" />
+          <ScalarProperty Name="ServiceDate" ColumnName="ServiceDate" />
           <ScalarProperty Name="ClientId" ColumnName="ClientId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Gender">
+      <EntityTypeMapping TypeName="MyDataBaseModel.Gender">
+        <MappingFragment StoreEntitySet="Gender">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Service">
-      <EntityTypeMapping TypeName="DBModel.Service">
+      <EntityTypeMapping TypeName="MyDataBaseModel.Service">
         <MappingFragment StoreEntitySet="Service">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -44,11 +52,12 @@
           <ScalarProperty Name="Duration" ColumnName="Duration" />
           <ScalarProperty Name="Cost" ColumnName="Cost" />
           <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="sysdiagrams">
-      <EntityTypeMapping TypeName="DBModel.sysdiagrams">
+      <EntityTypeMapping TypeName="MyDataBaseModel.sysdiagrams">
         <MappingFragment StoreEntitySet="sysdiagrams">
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="principal_id" ColumnName="principal_id" />

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SchoolService"
         mc:Ignorable="d"
-        Title="Список услуг" Height="600" Width="1000" Icon="Resources/school_logo.ico" WindowStartupLocation="CenterScreen">
+        Title="Список услуг" Height="600" Width="1000" Icon="Resources/school_logo.ico" WindowStartupLocation="CenterScreen" MinWidth="800" MinHeight="600">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="75"></RowDefinition>
@@ -25,17 +25,18 @@
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="5" Height="120" Width="980">
+                    <Grid Margin="5" Height="120" Width="980" Background="{Binding ItemBackground}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{Binding Image}" Height="100" Width="100"></Image>
                         <Grid Margin="10,0,0,0" >
                             <StackPanel Orientation="Vertical">
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource StandartTextBlock}" Text="{Binding Name}" FontSize="20"></TextBlock>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock HorizontalAlignment="Left" Style="{StaticResource StandartTextBlock}" Text="{Binding Cost,StringFormat={}{0} рублей}" FontSize="20"></TextBlock>
-                                    <TextBlock HorizontalAlignment="Left" Style="{StaticResource StandartTextBlock}" Text="{Binding Duration, StringFormat={} за {0} минут}" FontSize="20"></TextBlock>
+                                        <TextBlock HorizontalAlignment="Left" Style="{StaticResource StandartTextBlock}" Text="{Binding Cost,StringFormat={}{0}}" TextDecorations="{Binding TextDeco}" FontSize="20"></TextBlock>
+                                        <TextBlock HorizontalAlignment="Left" Style="{StaticResource StandartTextBlock}" Text="{Binding NewCost,StringFormat={} {0} рублей}" FontSize="20"></TextBlock>
+                                        <TextBlock HorizontalAlignment="Left" Style="{StaticResource StandartTextBlock}" Text="{Binding Duration, StringFormat={} за {0} минут}" FontSize="20"></TextBlock>
                                 </StackPanel>
-                                <TextBlock HorizontalAlignment="Left" Style="{StaticResource StandartTextBlock}" Text="{Binding Discount, StringFormat={}скидка: {0}}" FontSize="16"></TextBlock>
+                                <TextBlock HorizontalAlignment="Left" Style="{StaticResource StandartTextBlock}" Text="{Binding Discountstr, StringFormat={}скидка: {0}}" FontSize="16"></TextBlock>
                             </StackPanel>
                             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Orientation="Horizontal">
                                 <Button Background="{StaticResource SecondColor}" Foreground="{StaticResource ThirdColor}" FontSize="16" Content="Редактировать" Style="{StaticResource StandartButton}" Click="ClickChange"></Button>
@@ -48,7 +49,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <WrapPanel Grid.Row="1" Margin="5" HorizontalAlignment="Center" >
+        <WrapPanel Grid.Row="1" Margin="5" HorizontalAlignment="Center"  VerticalAlignment="Center">
             <ComboBox Name="ComboBoxSort" Width="175" Style="{StaticResource StandartComboBox}" SelectionChanged="SelectionChange">
                 <ComboBoxItem Content="Все диапазоны"></ComboBoxItem>
                 <ComboBoxItem Content="По убыванию"></ComboBoxItem>
@@ -74,6 +75,5 @@
         <TextBlock Name="TextBlockNumberOfServices" Style="{StaticResource StandartTextBlock}" FontSize="18" Foreground="{StaticResource ThirdColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3" Grid.Row="3" Text="Кол-во услуг: "></TextBlock>
         <Button Grid.Row="3" Foreground="{StaticResource DefaultColor}" Content="Добавить услугу" Style="{StaticResource StandartButton}" Background="{StaticResource ThirdColor}" Click="ClickAddService"></Button>
         <Button Grid.Row="3" Margin="10" HorizontalAlignment="Right" Foreground="{StaticResource DefaultColor}" Content="Ближайшие записи" Style="{StaticResource StandartButton}" Background="{StaticResource ThirdColor}" Click="ClickUpcomingEntries"></Button>
-
     </Grid>
 </Window>

@@ -14,12 +14,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SchoolService.Models;
+using System.Runtime.CompilerServices;
+using System.IO;
 
 namespace SchoolService
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public static List<Service> sortedList;
@@ -33,15 +32,23 @@ namespace SchoolService
         public MainWindow()
         {
             InitializeComponent();
+            InitializeMainWindow();
+        }
+        /// <summary>
+        /// Метод инициализации ListView и TextBlock
+        /// </summary>
+        public void InitializeMainWindow()
+        {
             using (DB db = new DB())
             {
-                ListViewService.ItemsSource = db.Service.ToList();
+                List<Service> services = db.Service.ToList();
+                ListViewService.ItemsSource = services;
                 TextBlockNumberOfServices.Text = "Кол-во услуг: " + (ListViewService.Items.Count) + "/" + db.Service.ToList().Count;
             }
             mainWindow = this;
         }
         /// <summary>
-        /// Метод инициализации ListView
+        /// Метод инициализации ListView и TextBlock
         /// </summary>
         public void InitializeListViewService()
         {
@@ -52,7 +59,7 @@ namespace SchoolService
             }
         }
         /// <summary>
-        /// Метод инициализации ComboBoxFilter
+        /// Метод инициализации ComboBox со скидками
         /// </summary>
         public void InitializeComboBoxFilter()
         {
@@ -106,14 +113,14 @@ namespace SchoolService
                 }
                 if (TextBoxFindDescription.Text != "")
                 {
-                    sortedList = sortedList.Where(element => element.Name.Contains(TextBoxFindDescription.Text)).ToList();
+                    sortedList = sortedList.Where(element => element.Description.Contains(TextBoxFindDescription.Text)).ToList();
                 }
                 ListViewService.ItemsSource = sortedList;
                 TextBlockNumberOfServices.Text = "Кол-во услуг: " + (ListViewService.Items.Count) + "/" + db.Service.ToList().Count;
             }
         }
         /// <summary>
-        /// Метод перехода на окно редактирования услуги
+        /// Метод редактирования услуги
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -134,7 +141,6 @@ namespace SchoolService
                 currentChoosedService = currentService;
                 if (currentService.AdditionalImage.Count > 0)
                 {
-                    MessageBox.Show("Additional imgaes count: " + currentService.AdditionalImage.Count);
                     foreach (var image in currentService.AdditionalImage)
                     {
                         Service service = new Service();
@@ -148,7 +154,8 @@ namespace SchoolService
                 }
                 else
                 {
-                    windowChangeService.ImageChoosedPhoto.Source = new BitmapImage(new Uri(System.IO.Path.Combine("C:\\Users\\Azarch\\source\\repos\\SchoolService\\SchoolService\\", currentService.Image)));
+                    string path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Resources\\", currentService.Image);
+                    windowChangeService.ImageChoosedPhoto.Source = new BitmapImage(new Uri(System.IO.Path.Combine(path)));
                 }
             }
         }
@@ -175,7 +182,7 @@ namespace SchoolService
             MessageBox.Show("Услуга была успешно удалена!");
         }
         /// <summary>
-        /// Обработка события изменения SelectedItem для применения фильтра
+        /// Метод реагирования на событие изменения выбора элемента у ComboBox
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -184,7 +191,7 @@ namespace SchoolService
             AddAllFilters();
         }
         /// <summary>
-        /// Обработка события изменения TextChange для применения фильтра
+        /// Метод реагирования на событие изменения текст у TextBox
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -193,7 +200,7 @@ namespace SchoolService
             AddAllFilters();
         }
         /// <summary>
-        /// Метод перехода на окно добавления услуги
+        /// Метод перехода на окно добавление сервиса
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -203,7 +210,7 @@ namespace SchoolService
             windowAddService.Show();
         }
         /// <summary>
-        /// Метод перехода на окно записи клиента на услугу
+        /// Метод перехода на окно добавление записи клиента на услугу
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -217,11 +224,10 @@ namespace SchoolService
             using (DB db = new DB())
             {
                 windowAddClientToService.ComboBoxChooseClient.ItemsSource = db.Client.ToList();
-
             }
         }
         /// <summary>
-        /// Метод перехода на окно просмотра записей
+        /// Метод перехода на окно ближайших записей
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -229,7 +235,7 @@ namespace SchoolService
         {
             this.Hide();
             windowUpcomingEntries.Show();
-            windowUpcomingEntries.InitializeDataGrid();
+            windowUpcomingEntries.InitializeListView();
         }
     }
 }

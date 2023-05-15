@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 using SchoolService.Models;
 namespace SchoolService.Windows
 {
-    /// <summary>
-    /// Логика взаимодействия для WindowAddService.xaml
-    /// </summary>
     public partial class WindowAddClientToService : Window
     {
         public WindowAddClientToService()
@@ -26,7 +23,7 @@ namespace SchoolService.Windows
             InitializeComponent();
         }
         /// <summary>
-        /// Метод закрытия окна
+        /// Метод обработки события закрытия окна
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -60,8 +57,8 @@ namespace SchoolService.Windows
                 ClientService clientService = new ClientService();
                 clientService.ServiceId = MainWindow.currentChoosedService.Id;
                 clientService.ClientId = (ComboBoxChooseClient.SelectedItem as Client).Id;
-                clientService.ServiceTime = (DateTime)DatePickerDate.SelectedDate;
-                clientService.ServiceTime = clientService.ServiceTime.Date + TimeSpan.Parse(TextBoxTime.Text);
+                clientService.ServiceDate = (DateTime)DatePickerDate.SelectedDate;
+                clientService.ServiceDate = clientService.ServiceDate.Date + TimeSpan.Parse(TextBoxTime.Text);
                 db.ClientService.Add(clientService);
                 db.SaveChanges();
                 MessageBox.Show("Вы успешно записали клиента на услугу!");
@@ -71,7 +68,7 @@ namespace SchoolService.Windows
             }
         }
         /// <summary>
-        /// Метод обновления всех полей ввода
+        /// Метод обновления всех полей для ввода
         /// </summary>
         public void UpdateAllBoxes()
         {

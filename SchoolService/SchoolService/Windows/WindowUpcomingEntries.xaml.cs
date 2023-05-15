@@ -18,32 +18,32 @@ using System.Windows.Shapes;
 using SchoolService.Models;
 namespace SchoolService
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class WindowUpcomingEntries : Window
     {
 
         public WindowUpcomingEntries()
         {
             InitializeComponent();
-    
         }
+        /// <summary>
+        /// Метод обновления ListView каждые 30 секунд
+        /// </summary>
         public void RefreshListEvery30Seconds()
         {
             Thread.Sleep(30000);
-            InitializeDataGrid();
-            Thread td = new Thread(new ThreadStart(RefreshListEvery30Seconds));
-            td.Start();
+            InitializeListView();
         }
-        public void InitializeDataGrid()
+        /// <summary>
+        /// Метод инициализации ListView
+        /// </summary>
+        public void InitializeListView()
         {
             using (DB db = new DB())
             {
                 foreach (ClientService item in db.ClientService)
                 {
-                    DateTime appointmentDate = item.ServiceTime; // назначенная дата
-                    DateTime currentDate = DateTime.Now; // текущая дата и время
+                    DateTime appointmentDate = item.ServiceDate; 
+                    DateTime currentDate = DateTime.Now; 
                     TimeSpan timeLeft = appointmentDate.Subtract(currentDate);
                     item.timeToStart = timeLeft;
                     if(item.timeToStart <= new TimeSpan(2, 0, 0))
@@ -53,11 +53,8 @@ namespace SchoolService
                     else
                     {
                         item.Foreground = Brushes.Black;
-                        // MessageBox.Show("Black");
-                       // DataGridUpcomingEntries.Background = item.Foreground;
                     }
                 }
-                //MessageBox.Show("foreground: " + db.ClientService.ToList()[0].foreground.Color);
                 int count = db.Service.ToList().Count;
                 int countOfListSEcond = db.Client.ToList().Count;
                 List<ClientService> list = new List<ClientService>();
@@ -68,12 +65,16 @@ namespace SchoolService
                         list.Add(item);
                     }
                 }
-                ListViewUpcomingEntries.ItemsSource = list;
+                Dispatcher.Invoke(new Action(() => ListViewUpcomingEntries.ItemsSource = list));
             }
             Thread td = new Thread(new ThreadStart(RefreshListEvery30Seconds));
             td.Start();
         }
-
+        /// <summary>
+        /// Метод возврата на предыдущее окно
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClickBack(object sender, RoutedEventArgs e)
         {
             this.Hide();

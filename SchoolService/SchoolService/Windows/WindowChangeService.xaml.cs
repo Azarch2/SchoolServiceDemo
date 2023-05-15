@@ -85,11 +85,12 @@ namespace SchoolService.Windows
                 db.SaveChanges();
                 this.Hide();
                 MessageBox.Show("Вы успешно изменили услугу");
-                MainWindow.mainWindow.InitializeListViewService();
+
+                MainWindow.mainWindow.AddAllFilters();
             }
         }
         /// <summary>
-        /// Метод закрытия окна
+        /// Метод обработки события закрытия окна
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -99,7 +100,7 @@ namespace SchoolService.Windows
             this.Hide();
         }
         /// <summary>
-        /// Метод обнолвения всех TextBox и Image
+        /// Метод обновления всех полей для ввода
         /// </summary>
         public void updateAllTextBoxesAndImage()
         {
@@ -151,7 +152,7 @@ namespace SchoolService.Windows
             }
         }
         /// <summary>
-        /// Методу удаления фотографии
+        /// Метод удаления фотографии
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

@@ -33,6 +33,5 @@
         <Button Style="{StaticResource StandartButton}" Content="Выбор фото" Width="300" Grid.Row="5"  Margin="5"  Background="{StaticResource SecondColor}" Click="ClickChoosePhoto"></Button>
         <Image x:Name="ImageChoosedPhoto" Margin="5" Grid.Row="5" Grid.Column="1"></Image>
         <Button Style="{StaticResource StandartButton}" Content="Добавить услугу" Width="300" Grid.Row="6" Grid.ColumnSpan="2"  Margin="5" Foreground="{StaticResource DefaultColor}" Background="{StaticResource ThirdColor}" Click="ClickAddService"></Button>
-
     </Grid>
 </Window>

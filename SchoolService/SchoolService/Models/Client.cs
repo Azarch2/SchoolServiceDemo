@@ -24,12 +24,13 @@ namespace SchoolService.Models
         public string Surname { get; set; }
         public string Name { get; set; }
         public string Patronymic { get; set; }
-        public string Gender { get; set; }
+        public int GenderId { get; set; }
         public string Phone { get; set; }
         public System.DateTime BirthDate { get; set; }
         public string Email { get; set; }
         public System.DateTime RegistrationDate { get; set; }
     
+        public virtual Gender Gender { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClientService> ClientService { get; set; }
     }

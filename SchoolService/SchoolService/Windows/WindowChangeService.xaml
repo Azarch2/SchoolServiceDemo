@@ -34,9 +34,9 @@
         <TextBox Name="TextBoxCost" Style="{StaticResource StandartTextBox}" Grid.Row="4" Grid.Column="1" Margin="5" Background="{StaticResource ThirdColor}"></TextBox>
         <TextBlock Grid.Row="5" Style="{StaticResource StandartTextBlock}" Text="Скидка"></TextBlock>
         <TextBox Name="TextBoxDiscount" Style="{StaticResource StandartTextBox}" Grid.Row="5" Grid.Column="1" Margin="5" Background="{StaticResource ThirdColor}"></TextBox>
-        <Button Style="{StaticResource StandartButton}" Content="Выбор фото" Width="300" Grid.Row="7"  Margin="5"  Background="{StaticResource SecondColor}" Click="ClickChoosePhoto"></Button>
+        <Button Style="{StaticResource StandartButton}" Content="Выбор фото" Width="300" Grid.Row="6"  Margin="5"  Background="{StaticResource SecondColor}" Click="ClickChoosePhoto"></Button>
         <Image x:Name="ImageChoosedPhoto" Margin="5" Grid.Row="6" Grid.Column="1"></Image>
-        <Button Style="{StaticResource StandartButton}" Content="Добавить фото" Width="300" Grid.Row="6"  Margin="5"  Background="{StaticResource SecondColor}" Click="ClickAddPhoto"></Button>
+        <Button Style="{StaticResource StandartButton}" Content="Добавить фото" Width="300" Grid.Row="7"  Margin="5"  Background="{StaticResource SecondColor}" Click="ClickAddPhoto"></Button>
         <ListView Name="ListViewPhotosCurrent" Grid.Row="7" Grid.Column="1" Margin="3" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -55,8 +55,5 @@
             </ListView.ItemTemplate>
         </ListView>
         <Button Style="{StaticResource StandartButton}" Content="Изменить услугу" Width="300" Grid.Row="8" Grid.ColumnSpan="2"  Margin="5" Foreground="{StaticResource DefaultColor}" Background="{StaticResource ThirdColor}" Click="ClickChangeService"></Button>
-
-
-
     </Grid>
 </Window>

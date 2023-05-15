@@ -13,56 +13,60 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Drawing.Design;
 using SchoolService.Models;
+using System.Runtime.CompilerServices;
+using System.IO;
+
 namespace SchoolService
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class WindowUser : Window
     {
         public static List<Service> sortedList;
         public static MainWindow mainWindow = new MainWindow();
+
         public WindowUser()
         {
             InitializeComponent();
-            using(DB db = new DB())
-            {
-                sortedList = db.Service.ToList();
-                InitializePathsInSortedList();
-                ListViewService.ItemsSource = sortedList;
-                TextBlockNumberOfServices.Text = "Кол-во услуг: " +( ListViewService.Items.Count) + "/" + db.Service.ToList().Count;
-            }
+            InitializeWindowUser();
+            InitializePathsInSortedList();
         }
-       /// <summary>
-       /// Метод инициализации ListView
-       /// </summary>
-        public void InitializeListViewService()
+        /// <summary>
+        /// Метод инициализации ListView и TextBlock
+        /// </summary>
+        public void InitializeWindowUser()
         {
             using (DB db = new DB())
             {
                 sortedList = db.Service.ToList();
-                InitializePathsInSortedList();
-                ListViewService.ItemsSource = sortedList;
+                List<Service> services = db.Service.ToList();
+                ListViewService.ItemsSource = services;
                 TextBlockNumberOfServices.Text = "Кол-во услуг: " + (ListViewService.Items.Count) + "/" + db.Service.ToList().Count;
             }
         }
-        /// <summary>
-        /// Метод инициалзиации путей для фотографий
-        /// </summary>
         public void InitializePathsInSortedList()
         {
-            foreach(var item in sortedList)
+            foreach (var item in sortedList)
             {
                 if (!item.Image.Contains("file"))
                 {
                     item.Image = @"..\" + item.Image;
                 }
             }
+            ListViewService.ItemsSource = sortedList;
         }
         /// <summary>
-        /// Метод инициализации ComboBox для фильтра
+        /// Метод инициализации ListView и TextBlock
+        /// </summary>
+        public void InitializeListViewService()
+        {
+            using (DB db = new DB())
+            {
+                ListViewService.ItemsSource = db.Service.ToList();
+                TextBlockNumberOfServices.Text = "Кол-во услуг: " + (ListViewService.Items.Count) + "/" + db.Service.ToList().Count;
+            }
+        }
+        /// <summary>
+        /// Метод инициализации ComboBox со скидками
         /// </summary>
         public void InitializeComboBoxFilter()
         {
@@ -82,7 +86,7 @@ namespace SchoolService
             using (DB db = new DB())
             {
                 sortedList = db.Service.ToList();
-                if(ComboBoxSort.SelectedIndex == 2)
+                if (ComboBoxSort.SelectedIndex == 2)
                 {
                     sortedList = sortedList.OrderBy(element => element.Cost).ToList();
                 }
@@ -92,7 +96,7 @@ namespace SchoolService
                 }
                 if (ComboBoxFilter.SelectedIndex == 1)
                 {
-                    sortedList = sortedList.Where(element => element.Discount>=0 && element.Discount<5).ToList();
+                    sortedList = sortedList.Where(element => element.Discount >= 0 && element.Discount < 5).ToList();
                 }
                 if (ComboBoxFilter.SelectedIndex == 2)
                 {
@@ -116,7 +120,7 @@ namespace SchoolService
                 }
                 if (TextBoxFindDescription.Text != "")
                 {
-                    sortedList = sortedList.Where(element => element.Name.Contains(TextBoxFindDescription.Text)).ToList();
+                    sortedList = sortedList.Where(element => element.Description.Contains(TextBoxFindDescription.Text)).ToList();
                 }
                 InitializePathsInSortedList();
                 ListViewService.ItemsSource = sortedList;
@@ -124,7 +128,29 @@ namespace SchoolService
             }
         }
         /// <summary>
-        /// Обработка события изменения SelectedItem для применения фильтра
+        /// Метод редактирования услуги
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClickRemove(object sender, RoutedEventArgs e)
+        {
+            using (DB db = new DB())
+            {
+                Service currentService = (sender as Button).DataContext as Service;
+                Service element = db.Service.Where(serviceFind => serviceFind.Id == currentService.Id).FirstOrDefault();
+                if (element.ClientService.Count > 0)
+                {
+                    MessageBox.Show("Вы не можете удалить эту услугу так как на неё есть запись!");
+                    return;
+                }
+                db.Service.Remove(element);
+                db.SaveChanges();
+                AddAllFilters();
+            }
+            MessageBox.Show("Услуга была успешно удалена!");
+        }
+        /// <summary>
+        /// Метод реагирования на событие изменения выбора элемента у ComboBox
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -133,7 +159,7 @@ namespace SchoolService
             AddAllFilters();
         }
         /// <summary>
-        /// Обработка события изменения TextChange для применения фильтра
+        /// Метод реагирования на событие изменения текст у TextBox
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -141,20 +167,7 @@ namespace SchoolService
         {
             AddAllFilters();
         }
-        /// <summary>
-        /// Метод возврата на предыдущее окно
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ClickLeave(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-        /// <summary>
-        /// Метод перехода на окно администратора
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void TextChangeGetAdmin(object sender, TextChangedEventArgs e)
         {
             if (TextBoxAdminCode.Text == "0000")
@@ -162,13 +175,14 @@ namespace SchoolService
                 MessageBox.Show("Вы перешли в режим администратора");
                 TextBoxAdminCode.Text = "";
                 this.Hide();
-                using (DB db = new DB())
-                {
-                 mainWindow.ListViewService.ItemsSource = db.Service.ToList();
-                    mainWindow.TextBlockNumberOfServices.Text = "Кол-во услуг: " + (ListViewService.Items.Count) + "/" + db.Service.ToList().Count;
-                }
+                mainWindow.InitializeMainWindow();
                 mainWindow.Show();
             }
+        }
+
+        private void ClickLeave(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

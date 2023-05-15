@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 using SchoolService.Models;
 namespace SchoolService.Windows
 {
-    /// <summary>
-    /// Логика взаимодействия для WindowAddService.xaml
-    /// </summary>
     public partial class WindowAddService : Window
     {
         public WindowAddService()
@@ -67,7 +64,7 @@ namespace SchoolService.Windows
             }
         }
         /// <summary>
-        /// Метод закрытия окна
+        /// Метод обработки события закрытия окна
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -77,7 +74,7 @@ namespace SchoolService.Windows
             this.Hide();
         }
         /// <summary>
-        /// Метод обновления всех TextBox и Image
+        /// Метод обновления всех полей ввода
         /// </summary>
         public void updateAllTextBoxesAndImage()
         {
@@ -99,15 +96,13 @@ namespace SchoolService.Windows
             {
                 string path = ofd.FileName;
                 string pathToAdd = System.IO.Path.Combine(Environment.CurrentDirectory, "Услуги школы");
-                //  pathToAdd = System.IO.Path.Combine(pathToAdd, "Услуги школы");
-                // pathToAdd = System.IO.Path.Combine(pathToAdd, System.IO.Path.GetFileName(path)) ;
                 try
                 {
                     File.Copy(path, pathToAdd);
                 }
                 catch
                 {
-
+                    MessageBox.Show("Возникла ошибка при создании фотографии");
                 }
                 ImageChoosedPhoto.Source = new BitmapImage(new Uri(path));
                 MessageBox.Show("Вы выбрали фото!");

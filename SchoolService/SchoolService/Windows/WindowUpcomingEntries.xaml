@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SchoolService"
         mc:Ignorable="d"
-        Title="Список услуг" Height="600" Width="1000" Icon="../Resources/school_logo.ico" WindowStartupLocation="CenterScreen">
+        Title="Список ближайших записей" Height="600" Width="1000" Icon="../Resources/school_logo.ico" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80"></RowDefinition>
@@ -90,7 +90,6 @@
                 <DataGridTextColumn Foreground="{Binding Foreground}" Header="Время до начала услуги" Binding="{Binding timeToStart}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-      
         <Button Grid.Row="3" HorizontalAlignment="Left" Margin="10" Foreground="{StaticResource DefaultColor}" Content="Назад" Style="{StaticResource StandartButton}" Background="{StaticResource ThirdColor}" Click="ClickBack"></Button>
     </Grid>
 </Window>

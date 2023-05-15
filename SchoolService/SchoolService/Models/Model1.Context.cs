@@ -16,7 +16,7 @@ namespace SchoolService.Models
     public partial class DB : DbContext
     {
         public DB()
-            : base("name=DB")
+            : base("name=MyDataBaseEntities2")
         {
         }
     
@@ -28,6 +28,7 @@ namespace SchoolService.Models
         public virtual DbSet<AdditionalImage> AdditionalImage { get; set; }
         public virtual DbSet<Client> Client { get; set; }
         public virtual DbSet<ClientService> ClientService { get; set; }
+        public virtual DbSet<Gender> Gender { get; set; }
         public virtual DbSet<Service> Service { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }

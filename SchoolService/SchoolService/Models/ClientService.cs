@@ -11,17 +11,20 @@ namespace SchoolService.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Drawing;
     using System.Windows.Media;
 
     public partial class ClientService
     {
         public int Id { get; set; }
         public int ServiceId { get; set; }
-        public System.DateTime ServiceTime { get; set; }
+        public System.DateTime ServiceDate { get; set; }
         public int ClientId { get; set; }
+
+
+
         public TimeSpan timeToStart { get; set; }
         public SolidColorBrush Foreground { get; set; }
+    
         public virtual Client Client { get; set; }
         public virtual Service Service { get; set; }
     }

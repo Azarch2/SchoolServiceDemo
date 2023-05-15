@@ -11,7 +11,10 @@ namespace SchoolService.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.IO;
+    using System.Windows;
+    using System.Windows.Media;
+
     public partial class Service
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -26,8 +29,80 @@ namespace SchoolService.Models
         public string Image { get; set; }
         public int Duration { get; set; }
         public int Cost { get; set; }
-        public int Discount { get; set; }
-    
+        public Nullable<int> Discount { get; set; }
+        public string Description { get; set; }
+        public string Discountstr
+        {
+            get
+            {
+                if(this.Discount > 0)
+                {
+                    return this.Discount.ToString() + "%";
+                }
+                else
+                {
+                    return "";
+                }
+            }
+            set
+            {
+                this.Discountstr = value;
+            }
+        }
+        public SolidColorBrush ItemBackground
+        {
+            get
+            {
+                if(this.Discount> 0)
+                {
+                    return new SolidColorBrush(Colors.LightGreen);
+                }
+                else
+                {
+                    return new SolidColorBrush(Colors.White);
+                }
+            }
+            set
+            {
+                this.ItemBackground = value;
+            }
+        }
+        public TextDecorationCollection TextDeco 
+        {
+            get
+            {
+                if(this.Discount> 0)
+                {
+                    return TextDecorations.Strikethrough;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            set
+            {
+                this.TextDeco = value;
+            }
+        }
+        public string NewCost
+        {
+            get
+            {
+                if(this.Discount > 0)
+                {
+                    return ((int)(this.Cost - this.Cost * (this.Discount / 100.0))).ToString();
+                }
+                else
+                {
+                    return "";
+                }
+            }
+            set
+            {
+                this.NewCost = value;
+            }
+        }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AdditionalImage> AdditionalImage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

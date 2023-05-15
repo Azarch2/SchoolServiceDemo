@@ -12,9 +12,9 @@ DEBUG;TRACE
 C:\Users\Azarch\Desktop\Git\SchoolServiceDemo\SchoolService\SchoolService\App.xaml
 6547083222
 7-1853913437
-211872659288
+22118151269
 20185116345
-MainWindow.xaml;Windows\WindowUpcomingEntries.xaml;Windows\WindowAddClientToService.xaml;Windows\WindowChangeService.xaml;Windows\WindowAddService.xaml;Windows\WindowUser.xaml;
+MainWindow.xaml;Windows\WindowUser.xaml;Windows\WindowUpcomingEntries.xaml;Windows\WindowAddClientToService.xaml;Windows\WindowChangeService.xaml;Windows\WindowAddService.xaml;
 
 False
 
